@@ -52,7 +52,7 @@
       if (empty($_POST["message"])) {
         $message = "NULL";
       } else {
-        $message = test_input($_POST["messsage"]);
+        $message = test_input($_POST["message"]);
       }
       
     }
