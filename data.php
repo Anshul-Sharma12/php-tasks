@@ -14,8 +14,11 @@
             border-radius: 6px;
             margin-left: 21.5%;
             text-align: center;
-
         }
+
+        table, th, td {
+    border: 1px solid black;
+}
     </style>
 </head>
 
@@ -65,13 +68,26 @@
       }
     
 
-    $sql = "INSERT INTO formdata VALUES ('$name', '$email', '$subject', '$message');";
+    $sql = "INSERT INTO formdata(name, email, subject, message) VALUES ('$name', '$email', '$subject', '$message');";
 
     if ($conn->query($sql) === TRUE) {
         echo "<h3>Data is Successfully Stored in the Database FormDetails</h3>";
-    echo ("Name: \n$name <br> Email:\n$email <br> Subject:\n$subject <br> Message:\n$message");
+    echo ("Name: \n$name <br> Email:\n$email <br> Subject:\n$subject <br> Message:\n$message <br><br>");
     } else {
         echo "error in adding $sql. " . $conn->error;
+    }
+
+    $sql1 = "SELECT * FROM formdata;";
+    $result = $conn->query($sql1);
+
+    if ($result->num_rows > 0) {
+        echo "<table><tr><th>S.no.</th><th>Name</th><th>Email</th><th>Subject</th><th>Message</th></tr>";
+        while ($row = $result->fetch_assoc()) {
+            echo "<tr><td>" . $row["id"] . "</td><td>" . $row["name"] . "</td><td>" . $row["email"] . "</td><td>" . $row["subject"] . "</td><td>" . $row["message"] . "</td></tr>";
+        }
+        echo "</table>";
+    }else {
+        echo "0 results";
     }
 
     $conn->close();
